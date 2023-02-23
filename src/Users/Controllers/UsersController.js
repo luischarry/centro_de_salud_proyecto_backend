@@ -37,5 +37,8 @@ UsersController.loginUser=async (body)=>{
 
     }
 };
-
+UsersController.allUser=async ()=>{
+    const result = await User.find({});
+    return result
+};
 module.exports = UsersController;

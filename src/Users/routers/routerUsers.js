@@ -2,9 +2,9 @@ const express = require('express');
 const router = express.Router();
 const UsersController = require('../Controllers/UsersController');
 const bcrypt = require('bcrypt');
-const jsonwebtoken = require('jsonwebtoken');
 const authConfig = require('../../../config/config');
-
+const auth = require('../../../middlewares/auth');
+const isAdmin = require('../../../middlewares/isAdmin');
 
 router.post("/singup", async (req, res, next) => {
     const password = bcrypt.hashSync(req.body.password, Number.parseInt(authConfig.ROUNDS));
@@ -38,4 +38,21 @@ router.post("/login", async (req, res, next) => {
     }
     
 });
+
+router.get("/allUser",auth,isAdmin, async (req, res, next) => {
+    try{
+        res.json(await UsersController.allUser({}))
+    }catch(e){
+        res.send("Incorrect");
+        //res.status(500).json({error: e.message})
+        //next(e);
+    }
+    
+});
+
+
+
+
+
+
 module.exports = router;
