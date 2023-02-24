@@ -25,7 +25,19 @@ router.post("/singup",auth,isAdmin, async (req, res, next) => {
     }
     
 });
-
+router.post("/login", async (req, res, next) => {
+    try{
+        res.json(await DoctorsController.loginDoctor({
+            email: req.body.email,
+            password: req.body.password
+        }))
+    }catch(e){
+        res.send("Incorrect user or password");
+        //res.status(500).json({error: e.message})
+        //next(e);
+    }
+    
+});
 
 
 
