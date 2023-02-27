@@ -7,38 +7,30 @@ const authConfig = require('../../../config/config');
 const UsersController = {};
 
 
-UsersController.newUser=async (user)=>{
+UsersController.newUser = async (user) => {
     const result = await User.create(user);
-    return(`El usuario ${result.name} a sido creado con exito`)
+    return (`El usuario ${result.name} a sido creado con exito`)
 };
-UsersController.loginUser=async (body)=>{
-    let userFound = await User.find({
+UsersController.loginUser = async (body) => {
+    const user = await User.findOne({
         email: body.email
     })
-    if (userFound) {      
-        if (userFound[0].email === undefined) {
-            //No hemos encontrado al usuario...mandamos un mensaje
-            return("Incorrect user or password");
-        } else {
-            //Hemos encontrado al usuario, vamos a ver si el pass es correcto      
-            if (bcrypt.compareSync(body.password, userFound[0].password)) { 
-                let token = jsonwebtoken.sign({ usuario: userFound }, authConfig.SECRET, {
-                    expiresIn: authConfig.EXPIRES
-                });
-                let loginOk = `Welcome back ${userFound[0].name}`;
-                return({
-                    loginOk,
-                    token: token
-                })
-            } else {
-                return("Incorrect user or password");
-            }
-        }
+    if (!user) return "Incorrect user or password"
 
+    //Hemos encontrado al usuario, vamos a ver si el pass es correcto      
+    if (!bcrypt.compareSync(body.password, user.password)) return "Incorrect user or password"
+
+    const token = jsonwebtoken.sign({ id: user._id, rol:user.rol }, authConfig.SECRET, {
+        expiresIn: authConfig.EXPIRES
+    });
+    user.password=undefined
+    return {
+        token: token,
+        user:user
     }
+
 };
-UsersController.allUser=async ()=>{
-    const result = await User.find({});
-    return result
+UsersController.allUser = async () => {
+    return User.find({});
 };
 module.exports = UsersController;

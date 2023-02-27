@@ -9,7 +9,7 @@ module.exports = async (req, res, next) => {
         jsonwebtoken.verify(token, authConfig.SECRET, (err, decoded) => {
             if (err) {
                 res.status(500).json({ msg: "problem decoding token", err });
-            } else if(decoded.rol==="admin"){
+            } else if(decoded.rol==="doctor"){
                 next();
             }else{
                 res.status(401).send(`Forbidden access`);

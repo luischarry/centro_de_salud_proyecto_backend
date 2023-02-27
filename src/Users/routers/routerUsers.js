@@ -7,18 +7,10 @@ const auth = require('../../../middlewares/auth');
 const isAdmin = require('../../../middlewares/isAdmin');
 
 router.post("/singup", async (req, res, next) => {
-    const password = bcrypt.hashSync(req.body.password, Number.parseInt(authConfig.ROUNDS));
+    req.body.password = bcrypt.hashSync(req.body.password, Number.parseInt(authConfig.ROUNDS));
+    req.body.rol="user"
     try{
-        res.json(await UsersController.newUser({
-            name: req.body.name,
-            surname: req.body.surname,
-            dni: req.body.dni,
-            email: req.body.email,
-            password: password,
-            phone: req.body.phone,
-            cipa: req.body.cipa,
-            rol:"user"
-        }))
+        res.json(await UsersController.newUser(req.body))
     }catch(e){
         res.status(500).json({error: e.message})
         //next(e);

@@ -7,18 +7,9 @@ const bcrypt = require('bcrypt');
 const authConfig = require('../../../config/config');
 
 router.post("/singup",auth,isAdmin, async (req, res, next) => {
-    const password = bcrypt.hashSync(req.body.password, Number.parseInt(authConfig.ROUNDS));
+    req.body.password = bcrypt.hashSync(req.body.password, Number.parseInt(authConfig.ROUNDS));
     try{
-        res.json(await DoctorsController.newUser({
-            name: req.body.name,
-            surname: req.body.surname,
-            dni: req.body.dni,
-            email: req.body.email,
-            password: password,
-            phone: req.body.phone,
-            cipa: req.body.cipa,
-            rol:req.body.rol
-        }))
+        res.json(await DoctorsController.newDoctor(req.body))
     }catch(e){
         res.status(500).json({error: e.message})
         //next(e);
@@ -39,7 +30,16 @@ router.post("/login", async (req, res, next) => {
     
 });
 
-
+router.get("/alluser", async (req, res, next) => {
+    try{
+        res.json(await DoctorsController.alluser({}))
+    }catch(e){
+        res.send("ERROR");
+        //res.status(500).json({error: e.message})
+        //next(e);
+    }
+    
+});
 
 
 module.exports = router;

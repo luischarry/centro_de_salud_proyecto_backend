@@ -12,7 +12,7 @@ module.exports = (req, res, next) => {
                 //...devuelve un error
                 res.status(500).json({ msg: "problem decoding token", err });
             } else {
-                req.user = decoded.usuario[0]; 
+                req.user = decoded; 
                 next();
             }
         })
