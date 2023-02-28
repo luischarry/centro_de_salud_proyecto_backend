@@ -30,10 +30,8 @@ DoctorsController.loginDoctor = async (body) => {
     }
 
 };
-DoctorsController.alluser = async () => {
-    
-    return (`mensaje de regreso`)
+DoctorsController.allDoctors = async () => {
+    return Doctor.find({});
 };
-
 
 module.exports = DoctorsController;

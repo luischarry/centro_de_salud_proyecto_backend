@@ -7,9 +7,6 @@ const AppointmentsController = {};
 
 AppointmentsController.newAppointment = async (data, token) => {
 
-
-
-
     const doctorAppointments = await Appointment.find({ doctorId: data.doctorId, appointment_date: data.appointment_date });
 
     if (doctorAppointments.length > 0) return 'The doctor already has an appointment at that time';
@@ -27,7 +24,6 @@ AppointmentsController.newAppointment = async (data, token) => {
         if (err) {
             return "problem decoding token"
         } else if (decoded.id !== data.userId) {
-            console.log("aqui entra en el error")
             return "cannot create medical appointment";
         } else {
             data.date = new Date()
@@ -38,7 +34,6 @@ AppointmentsController.newAppointment = async (data, token) => {
 
 };
 AppointmentsController.getAllAppointment = async (data) => {
-    //console.log('aqui llegamos',(data))
     return Appointment.find(data)
         .populate('userId')
         .populate('doctorId')
@@ -80,5 +75,9 @@ AppointmentsController.getAppointmentToday = async (doctor) => {
         .populate('userId')
         .populate('doctorId');
 };
-
+AppointmentsController.deleteAppointment = async (id, token) => {
+    const citaElminada = await Appointment.findByIdAndDelete(id);   
+    if (!citaElminada) return 'cita no encontrada';
+    return 'cita eliminada exitosamente'
+};
 module.exports = AppointmentsController;

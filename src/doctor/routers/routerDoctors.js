@@ -29,17 +29,14 @@ router.post("/login", async (req, res, next) => {
     }
     
 });
-
-router.get("/alluser", async (req, res, next) => {
+router.get("/alldoctor",auth,isAdmin, async (req, res, next) => {
     try{
-        res.json(await DoctorsController.alluser({}))
+        res.json(await DoctorsController.allDoctors({}))
     }catch(e){
-        res.send("ERROR");
+        res.send("Incorrect");
         //res.status(500).json({error: e.message})
         //next(e);
     }
-    
 });
-
 
 module.exports = router;

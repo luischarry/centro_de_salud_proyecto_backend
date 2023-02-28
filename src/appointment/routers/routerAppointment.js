@@ -34,11 +34,20 @@ router.get("/",auth, async (req, res, next) => {
         res.status(500).json({ error: e.message })
         //next(e);
     }
-
 });
 router.get("/today/:doctor",isDoctor, async (req, res, next) => {
     try {
         res.json(await AppointmentsController.getAppointmentToday(req.params.doctor))
+    } catch (e) {
+        res.status(500).json({ error: e.message })
+        //next(e);
+    }
+});
+router.delete("/:id",auth, async (req, res, next) => {
+    try {
+        const token = req.headers.authorization.split(" ")[1]
+        res.json(await AppointmentsController.deleteAppointment(req.params.id,token))
+
     } catch (e) {
         res.status(500).json({ error: e.message })
         //next(e);
