@@ -1,7 +1,7 @@
 const { query } = require('express');
-const Appointment = require('../model/Appointment');
+const Appointment = require('./Appointment');
 const jsonwebtoken = require('jsonwebtoken');
-const authConfig = require('../../../config/config');
+const authConfig = require('../../config/config');
 
 const AppointmentsController = {};
 
@@ -17,7 +17,7 @@ AppointmentsController.newAppointment = async (data, token) => {
     const hourEnd = new Date(hourStart.getTime() + (60 * 60 * 1000));
     const anyAppointments = await Appointment.find({ appointment_date: { $gte: hourStart, $lt: hourEnd } });
 
-    if (anyAppointments.length > 0) return 'There is already an appointment at that time';
+    if (anyAppointments.length > 0) {return 'There is already an appointment at that time'};
 
 
     jsonwebtoken.verify(token, authConfig.SECRET, (err, decoded) => {

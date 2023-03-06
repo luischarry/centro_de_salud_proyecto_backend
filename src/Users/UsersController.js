@@ -1,15 +1,15 @@
 const { query } = require('express');
-const User = require('../model/user');
+const User = require('./User');
 const bcrypt = require('bcrypt');
 const jsonwebtoken = require('jsonwebtoken');
-const authConfig = require('../../../config/config');
+const authConfig = require('../../config/config');
 
 const UsersController = {};
 
 
 UsersController.newUser = async (user) => {
     const result = await User.create(user);
-    return (`El usuario ${result.name} a sido creado con exito`)
+    if (result)return `Usuario creado con exito`
 };
 UsersController.loginUser = async (body) => {
     const user = await User.findOne({

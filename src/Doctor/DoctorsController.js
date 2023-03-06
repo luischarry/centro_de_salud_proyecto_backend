@@ -1,8 +1,8 @@
 const { query } = require('express');
-const Doctor = require('../model/doctor');
+const Doctor = require('./Doctor');
 const bcrypt = require('bcrypt');
 const jsonwebtoken = require('jsonwebtoken');
-const authConfig = require('../../../config/config');
+const authConfig = require('../../config/config');
 const DoctorsController = {};
 
 DoctorsController.newDoctor = async (data) => {

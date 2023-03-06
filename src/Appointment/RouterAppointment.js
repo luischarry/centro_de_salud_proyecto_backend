@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const jsonwebtoken = require('jsonwebtoken');
-const authConfig = require('../../../config/config');
-const AppointmentsController = require('../Controllers/AppointmentsController');
-const auth = require('../../../middlewares/auth');
-const isAdmin = require('../../../middlewares/isAdmin');
-const isDoctor = require('../../../middlewares/isDoctor');
+const authConfig = require('../../config/config');
+const AppointmentsController = require('./AppointmentsController');
+const auth = require('../../middlewares/auth');
+const isAdmin = require('../../middlewares/isAdmin');
+const isDoctor = require('../../middlewares/isDoctor');
 //pendiente dar auth y ver lo del token
 router.post("/",auth, async (req, res, next) => {
     try {
