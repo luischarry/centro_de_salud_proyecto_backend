@@ -2,9 +2,9 @@ const express = require('express');
 const router = express.Router();
 const UsersController = require('./UsersController');
 const bcrypt = require('bcrypt');
-const authConfig = require('../../../config/config');
-const auth = require('../../../middlewares/auth');
-const isAdmin = require('../../../middlewares/isAdmin');
+const authConfig = require('../../config/config');
+const auth = require('../../middlewares/auth');
+const isAdmin = require('../../middlewares/isAdmin');
 
 router.post("/singup", async (req, res, next) => {
     req.body.password = bcrypt.hashSync(req.body.password, Number.parseInt(authConfig.ROUNDS));

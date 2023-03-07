@@ -29,7 +29,7 @@ router.post("/login", async (req, res, next) => {
     }
     
 });
-router.get("/alldoctor",auth,isAdmin, async (req, res, next) => {
+router.get("/alldoctors",auth, async (req, res, next) => {
     try{
         res.json(await DoctorsController.allDoctors({}))
     }catch(e){
