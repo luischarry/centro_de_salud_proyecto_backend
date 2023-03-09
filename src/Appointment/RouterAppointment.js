@@ -8,6 +8,7 @@ const isAdmin = require('../../middlewares/isAdmin');
 const isDoctor = require('../../middlewares/isDoctor');
 //pendiente dar auth y ver lo del token
 router.post("/",auth, async (req, res, next) => {
+
     try {
         const token = req.headers.authorization.split(" ")[1]
         res.json(await AppointmentsController.newAppointment(req.body,token))
@@ -54,5 +55,13 @@ router.delete("/:id",auth, async (req, res, next) => {
     }
 
 });
+router.get("/admin/generadorcitas", async (req, res, next) => {
+    try {
+        res.json(await AppointmentsController.generadorcitas(req.body))
+    } catch (e) {
+        res.status(500).json({ error: e.message })
+        //next(e);
+    }
 
+});
 module.exports = router;

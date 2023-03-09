@@ -1,23 +1,23 @@
 const { query } = require('express');
 const Appointment = require('./Appointment');
+const moment = require('moment');
 const jsonwebtoken = require('jsonwebtoken');
 const authConfig = require('../../config/config');
+//const DoctorsController=require('../Doctor/DoctorsController')
 
 const AppointmentsController = {};
 
 AppointmentsController.newAppointment = async (data, token) => {
-
-    const doctorAppointments = await Appointment.find({ doctorId: data.doctorId, appointment_date: data.appointment_date });
-
+    const doctorAppointments = await Appointment.find({ doctorId: data.doctorId, date: data.date, time: data.time});
     if (doctorAppointments.length > 0) return 'The doctor already has an appointment at that time';
 
     // Comprobar si hay una cita en la misma hora para cualquier médico
-    const hourStart = new Date(data.appointment_date);
-    hourStart.setMinutes(0);
-    const hourEnd = new Date(hourStart.getTime() + (60 * 60 * 1000));
-    const anyAppointments = await Appointment.find({ appointment_date: { $gte: hourStart, $lt: hourEnd } });
+    // const hourStart = new Date(data.appointment_date);
+    // hourStart.setMinutes(0);
+    // const hourEnd = new Date(hourStart.getTime() + (60 * 60 * 1000));
+    // const anyAppointments = await Appointment.find({ appointment_date: { $gte: hourStart, $lt: hourEnd } });
 
-    if (anyAppointments.length > 0) {return 'There is already an appointment at that time'};
+    // if (anyAppointments.length > 0) { return 'There is already an appointment at that time' };
 
 
     jsonwebtoken.verify(token, authConfig.SECRET, (err, decoded) => {
@@ -26,12 +26,10 @@ AppointmentsController.newAppointment = async (data, token) => {
         } else if (decoded.id !== data.userId) {
             return "cannot create medical appointment";
         } else {
-            data.date = new Date()
+            //data.date = new Date()
             return Appointment.create(data);
         }
     })
-
-
 };
 AppointmentsController.getAllAppointment = async (data) => {
     return Appointment.find(data)
@@ -76,8 +74,30 @@ AppointmentsController.getAppointmentToday = async (doctor) => {
         .populate('doctorId');
 };
 AppointmentsController.deleteAppointment = async (id, token) => {
-    const citaElminada = await Appointment.findByIdAndDelete(id);   
+    const citaElminada = await Appointment.findByIdAndDelete(id);
     if (!citaElminada) return 'cita no encontrada';
     return 'cita eliminada exitosamente'
+};
+AppointmentsController.generadorcitas = async (data) => {
+    //DoctorsController.allDoctors
+    //const doctorAppointments = await Appointment.find({ doctorId: data.doctorId });
+    //Horas de trabajo (de 9 a 17 horas)
+    const horasTrabajo = [];
+    const diasHabiles = [1, 2, 3, 4, 5];
+    for (let hora = 9; hora <= 17; hora++) {
+        horasTrabajo.push(moment().startOf('day').hour(hora).toDate());
+    }
+    console.log(horasTrabajo)
+    // Fecha inicial para generar citas
+    const fechaInicial = moment().add(3, 'days').startOf('day').toDate();
+    for (let i = 0; i < 5; i++) {
+        const fecha = moment(fechaInicial).add(i, 'days').toDate();
+        if (diasHabiles.includes(moment(fecha).day())) {
+            horasTrabajo.forEach(hora => {
+                //Appointment.create({ doctorId: data.doctorId, hora, disponible: true })
+                //console.log(({ doctorId: data.doctorId, hora, disponible: true }))
+            })
+        };
+    }
 };
 module.exports = AppointmentsController;
