@@ -8,7 +8,7 @@ const authConfig = require('../../config/config');
 const AppointmentsController = {};
 
 AppointmentsController.newAppointment = async (data, token) => {
-    const doctorAppointments = await Appointment.find({ doctorId: data.doctorId, date: data.date, time: data.time});
+    const doctorAppointments = await Appointment.find({ doctorId: data.doctorId, date: data.date, time: data.time });
     if (doctorAppointments.length > 0) return 'The doctor already has an appointment at that time';
 
     // Comprobar si hay una cita en la misma hora para cualquier médico
@@ -43,6 +43,7 @@ AppointmentsController.getAppointment = async (data) => {
     const filter = {};
     if (data.userId) filter.userId = data.userId;
     if (data.doctorId) filter.doctorId = data.doctorId;
+    filter.date = { $gte: new Date().setHours(0, 0, 0, 0) };
     const result = await Appointment.find(filter)
         //.populate('userId')
         .populate('doctorId')
@@ -57,21 +58,16 @@ AppointmentsController.getAppointmentToday = async (doctor) => {
 
     // Get the current date and set the time to the start of the day
     const currentDate = new Date();
+    currentDate.setDate(currentDate.getDate() + 1);
     currentDate.setHours(0, 0, 0, 0);
-    // Get the end of the day by adding 24 hours and subtracting 1 millisecond
-    const endOfDay = new Date(currentDate.getTime() + (24 * 60 * 60 * 1000) - 1);
+    // Extract the date part of the current date as a string
+    const dateString = currentDate.toISOString().split('T')[0];
 
     // Find appointments for the specified doctor and current date range
     return Appointment.find({
-        doctorId: doctor,
-        appointment_date
-            : {
-            $gte: currentDate,
-            $lte: endOfDay
-        }
+        doctorId: doctor, date: dateString
     })
         .populate('userId')
-        .populate('doctorId');
 };
 AppointmentsController.deleteAppointment = async (id, token) => {
     const citaElminada = await Appointment.findByIdAndDelete(id);

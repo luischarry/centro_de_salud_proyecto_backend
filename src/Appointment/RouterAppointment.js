@@ -6,7 +6,7 @@ const AppointmentsController = require('./AppointmentsController');
 const auth = require('../../middlewares/auth');
 const isAdmin = require('../../middlewares/isAdmin');
 const isDoctor = require('../../middlewares/isDoctor');
-//pendiente dar auth y ver lo del token
+
 router.post("/",auth, async (req, res, next) => {
 
     try {
@@ -19,7 +19,7 @@ router.post("/",auth, async (req, res, next) => {
     }
 
 });
-router.get("/admin", auth, isAdmin, async (req, res, next) => {
+router.get("/admin", auth, isAdmin, async (req, res, next) => {                                           
     try {
         res.json(await AppointmentsController.getAllAppointment({}))
     } catch (e) {
@@ -39,6 +39,7 @@ router.get("/",auth, async (req, res, next) => {
 router.get("/today/:doctor",isDoctor, async (req, res, next) => {
     try {
         res.json(await AppointmentsController.getAppointmentToday(req.params.doctor))
+       
     } catch (e) {
         res.status(500).json({ error: e.message })
         //next(e);
