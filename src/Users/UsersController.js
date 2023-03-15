@@ -15,10 +15,10 @@ UsersController.loginUser = async (body) => {
     const user = await User.findOne({
         email: body.email
     })
-    if (!user) return "Incorrect user or password"
+    if (!user) throw new Error("");
 
     //Hemos encontrado al usuario, vamos a ver si el pass es correcto      
-    if (!bcrypt.compareSync(body.password, user.password)) return "Incorrect user or password"
+    if (!bcrypt.compareSync(body.password, user.password)) throw new Error("");
 
     const token = jsonwebtoken.sign({ id: user._id, rol:user.rol }, authConfig.SECRET, {
         expiresIn: authConfig.EXPIRES
