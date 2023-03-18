@@ -1,7 +1,7 @@
 # Proyecto final Centro de salud Backend
 ***
 
-## Tabla de contenido
+## Tabla de contenido 📋
 1. [Requisitos](#Requisitos)
 2. [Tecnologias utilizadas](#Tecnologias_utilizadas)
 3. [Paginas](#Paginas)
@@ -58,6 +58,7 @@ Si el correo y la contraseña existen nos devolvera un token y los datos del usu
 
 El endpoint verifica el token y que si el usuario del token el mismo para quien va ser la cita medica,
 tambien verifica que el medico no tenga citas ese dia a esa hora.
+
 [![creacion-cita.png](https://i.postimg.cc/g061Hrq1/creacion-cita.png)](https://postimg.cc/HJdSpYNt)
 
 ### Eliminar cita 
@@ -70,8 +71,7 @@ El usuario podra elminiar alguna cita que desee cancelar.
 ### Login medicos
 - utilizamos en enlace:
 [POST] http://localhost:5500/doctor/login
-
-funciona igual que el login de usuarios, devuelve un token y la informacion del usuario.
+Funciona igual que el login de usuarios, devuelve un token y la informacion del usuario.
 [![login-doctor.png](https://i.postimg.cc/L5NHFhWN/login-doctor.png)](https://postimg.cc/JHHwb7Mk)
 
 ### Perfil del medico
@@ -83,10 +83,10 @@ Nos dara como resultado todas las citas del medico, le medico debe estar logeado
 
 ### Admin
 El admin podra ver todos los medicos, todos los usuario, y todas las citas solicitadas por los usuarios.
- [GET] http://localhost:5500/user/allUser
+- utilizamos en enlace: [GET] http://localhost:5500/user/allUser
  [![admin-usuarios.png](https://i.postimg.cc/qRfBszS5/admin-usuarios.png)](https://postimg.cc/v1zdMHQr)
 
-[GET] http://localhost:5500/appointment/admin
+- utilizamos en enlace: [GET] http://localhost:5500/appointment/admin
  [![admin-citas.png](https://i.postimg.cc/GmsZkqRb/admin-citas.png)](https://postimg.cc/pmRGvQyS)
 
 
