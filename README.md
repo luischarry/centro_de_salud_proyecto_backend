@@ -79,14 +79,17 @@ Funciona igual que el login de usuarios, devuelve un token y la informacion del 
 [GET] http://localhost:5500/appointment/today/:doctor
 
 Nos dara como resultado todas las citas del medico, le medico debe estar logeado ya que se verifica el token de que sea el medico.
+
 [![medico-citas.png](https://i.postimg.cc/j2V8qhpj/medico-citas.png)](https://postimg.cc/r0JGQ5F6)
 
 ### Admin
 El admin podra ver todos los medicos, todos los usuario, y todas las citas solicitadas por los usuarios.
 - utilizamos en enlace: [GET] http://localhost:5500/user/allUser
+
  [![admin-usuarios.png](https://i.postimg.cc/qRfBszS5/admin-usuarios.png)](https://postimg.cc/v1zdMHQr)
 
 - utilizamos en enlace: [GET] http://localhost:5500/appointment/admin
+
  [![admin-citas.png](https://i.postimg.cc/GmsZkqRb/admin-citas.png)](https://postimg.cc/pmRGvQyS)
 
 
