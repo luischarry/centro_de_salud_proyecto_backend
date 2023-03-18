@@ -15,9 +15,9 @@ DoctorsController.loginDoctor = async (body) => {
         email: body.email
     })
 
-    if (!doctor) throw new Error("");
+    if (!doctor) throw new Error("Error");
     
-    if (!bcrypt.compareSync(body.password, doctor.password)) throw new Error("");
+    if (!bcrypt.compareSync(body.password, doctor.password)) throw new Error("Error");
 
     const token = jsonwebtoken.sign({ id: doctor._id, rol: doctor.rol }, authConfig.SECRET, {
         expiresIn: authConfig.EXPIRES

@@ -8,14 +8,11 @@ const isAdmin = require('../../middlewares/isAdmin');
 const isDoctor = require('../../middlewares/isDoctor');
 
 router.post("/",auth, async (req, res, next) => {
-
     try {
         const token = req.headers.authorization.split(" ")[1]
         res.json(await AppointmentsController.newAppointment(req.body,token))
-
     } catch (e) {
         res.status(500).json({ error: e.message })
-        //next(e);
     }
 
 });

@@ -8,28 +8,20 @@ const authConfig = require('../../config/config');
 const AppointmentsController = {};
 
 AppointmentsController.newAppointment = async (data, token) => {
-    const doctorAppointments = await Appointment.find({ doctorId: data.doctorId, date: data.date, time: data.time });
-    if (doctorAppointments.length > 0) return 'The doctor already has an appointment at that time';
-
-    // Comprobar si hay una cita en la misma hora para cualquier médico
-    // const hourStart = new Date(data.appointment_date);
-    // hourStart.setMinutes(0);
-    // const hourEnd = new Date(hourStart.getTime() + (60 * 60 * 1000));
-    // const anyAppointments = await Appointment.find({ appointment_date: { $gte: hourStart, $lt: hourEnd } });
-
-    // if (anyAppointments.length > 0) { return 'There is already an appointment at that time' };
-
+    const doctorAppointments = await Appointment.find({ doctorId: data.doctorId , date: data.date , time: data.time});
+    if (doctorAppointments.length > 0) throw new Error("The doctor already has an appointment on that date and time");
 
     jsonwebtoken.verify(token, authConfig.SECRET, (err, decoded) => {
         if (err) {
-            return "problem decoding token"
+            throw new Error("problem decoding token");
         } else if (decoded.id !== data.userId) {
-            return "cannot create medical appointment";
-        } else {
-            //data.date = new Date()
-            return Appointment.create(data);
+            throw new Error("cannot create medical appointment");
         }
     })
+
+    Appointment.create(data);
+    return 'Appointment created successfully'
+    
 };
 AppointmentsController.getAllAppointment = async (data) => {
     return Appointment.find(data)
