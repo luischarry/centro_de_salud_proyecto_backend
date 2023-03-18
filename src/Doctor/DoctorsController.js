@@ -11,12 +11,12 @@ DoctorsController.newDoctor = async (data) => {
 };
 
 DoctorsController.loginDoctor = async (body) => {
-    let doctor = await Doctor.findOne({
+    const doctor = await Doctor.findOne({
         email: body.email
     })
-    
-    if (!doctor) throw new Error("");
 
+    if (!doctor) throw new Error("");
+    
     if (!bcrypt.compareSync(body.password, doctor.password)) throw new Error("");
 
     const token = jsonwebtoken.sign({ id: doctor._id, rol: doctor.rol }, authConfig.SECRET, {
