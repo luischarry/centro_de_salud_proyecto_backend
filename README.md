@@ -6,7 +6,7 @@
 2. [Tecnologias utilizadas](#Tecnologias_utilizadas)
 3. [Paginas](#Paginas)
 *** 
-Se decide crear un backend para un centro de salud con una base de datos no relacional, y que compla con los siguientes requisitos:
+Se decide crear un backend para un centro de salud con una base de datos no relacional, y que cumpla con los siguientes requisitos:
 
 ## Requisitos
 
@@ -28,9 +28,9 @@ Se decide crear un backend para un centro de salud con una base de datos no rela
 
 ## Tecnologias utilizadas 🦾
 
-* ExpressJS
-* Mongoose
-* MongoDB
+* ExpressJS: Un framework de Node.js utilizado para construir aplicaciones web y APIs.
+* Mongoose: Una biblioteca de JavaScript utilizada para interactuar con bases de datos MongoDB a través de Node.js.
+* MongoDB: Una base de datos NoSQL utilizada para almacenar datos en formato JSON.
 ***
 
 ## Postman
@@ -80,17 +80,17 @@ Funciona igual que el login de usuarios, devuelve un token y la informacion del 
 
 Nos dara como resultado todas las citas del medico, le medico debe estar logeado ya que se verifica el token de que sea el medico.
 
-[![medico-citas.png](https://i.postimg.cc/j2V8qhpj/medico-citas.png)](https://postimg.cc/r0JGQ5F6)
+![medico-citas.png](./screenshot/medico-citas.png)
 
 ### Admin
 El admin podra ver todos los medicos, todos los usuario, y todas las citas solicitadas por los usuarios.
 - utilizamos en enlace: [GET] http://localhost:5500/user/allUser
 
- [![admin-usuarios.png](https://i.postimg.cc/qRfBszS5/admin-usuarios.png)](https://postimg.cc/v1zdMHQr)
+ ![admin_usuarios.png](./screenshot/admin_usuarios.png)
 
 - utilizamos en enlace: [GET] http://localhost:5500/appointment/admin
 
- [![admin-citas.png](https://i.postimg.cc/GmsZkqRb/admin-citas.png)](https://postimg.cc/pmRGvQyS)
+ ![admin-citas.png](./screenshot/admin-citas.png)
 
 
 

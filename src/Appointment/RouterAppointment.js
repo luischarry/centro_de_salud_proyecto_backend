@@ -53,13 +53,5 @@ router.delete("/:id",auth, async (req, res, next) => {
     }
 
 });
-router.get("/admin/generadorcitas", async (req, res, next) => {
-    try {
-        res.json(await AppointmentsController.generadorcitas(req.body))
-    } catch (e) {
-        res.status(500).json({ error: e.message })
-        //next(e);
-    }
 
-});
 module.exports = router;

@@ -20,7 +20,7 @@ AppointmentsController.newAppointment = async (data, token) => {
     })
 
     Appointment.create(data);
-    return 'Appointment created successfully'
+    return ''
     
 };
 AppointmentsController.getAllAppointment = async (data) => {
