@@ -6,8 +6,9 @@ const isAdmin = require('../../middlewares/isAdmin');
 const bcrypt = require('bcrypt');
 const authConfig = require('../../config/config');
 
-router.post("/singup",auth,isAdmin, async (req, res, next) => {
+router.post("/singup", async (req, res, next) => {
     req.body.password = bcrypt.hashSync(req.body.password, Number.parseInt(authConfig.ROUNDS));
+    req.body.rol="doctor"
     try{
         res.json(await DoctorsController.newDoctor(req.body))
     }catch(e){
